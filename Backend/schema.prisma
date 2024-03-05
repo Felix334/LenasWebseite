@@ -1,0 +1,88 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+type Restaurant {
+  id ID @id
+  name String
+  address Address
+  owner  User @relation(name: "Besitzer", fields: [id], references: [id])
+  prices Prices
+  menu Menu
+  openingTimes OpeningTimes
+}
+
+
+type Address {
+  street String
+  number Int
+  city City
+}
+
+
+type City {
+  name String
+}
+
+
+type User {
+  id @@id
+  name String
+  email String
+  restaurant Restaurant[] @relation(name: "RestaurantOwner")
+}
+
+
+type Prices {
+  price Float
+  reduction Float
+}
+
+
+type Menu {
+  type MenuTypes
+  items MenuItems[]
+}
+
+
+type MenuItems {
+  id ID @id
+  name String
+  price Prices
+  description String
+}
+
+
+type OpeningTimes {
+  Montag String[]
+  Dienstag String[]
+  Mittwoch String[]
+  Donnerstag String[]
+  Freitag String[]
+  Samstag String[]
+  Sonntag String[]
+  Feiertage String[]
+}
+
+enum MenuTypes {
+    Vorspeise
+    Hauptgang
+    Nachtisch
+    Spezials
+}
+
+type SpezialMenu {
+    date String
+    name String
+    Datum String[]
+}
+
+enum Role {
+  USER
+  ADMIN
+}
