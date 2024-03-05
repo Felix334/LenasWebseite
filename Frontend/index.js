@@ -3,7 +3,7 @@ const button = document.querySelector('.button');
 
 const form = document.getElementById('data-form');
 
-    form.addEventListener('submit', (event) => {
+    form.addEventListener('submit', async (event) => {
     event.preventDefault();
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
